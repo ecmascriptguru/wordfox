@@ -5,14 +5,17 @@ let Popup = (() => {
 		_startButton = $("#btn-search"),
 		_keywordBox = $("#keyword"),
 
+		getKeyword = function() {
+			return _keyword;
+		},
+
 		showResults = function() {
 			//
 		},
 
 		start = function() {
 			_keyword = _keywordBox.val();
-			localStorage._keyword = JSON.stringify(_keyword);
-			_wordFoxPro.start(showResults);
+			_wordFoxPro.start(_keyword, showResults);
 		},
 
 		init = () => {
@@ -31,7 +34,8 @@ let Popup = (() => {
 		};
 
 	return {
-		init: init
+		init: init,
+		getKeyword: getKeyword
 	};
 })();
 

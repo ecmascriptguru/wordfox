@@ -6,6 +6,7 @@ let WordFoxPro = (function() {
 		_cafeBaseUrl = "",
 
 		start = function(keyword, callback) {
+			localStorage._keyword = JSON.stringify(keyword || "");
 			if (typeof callback === "function") {
 				callback();
 			}
