@@ -1,0 +1,30 @@
+{
+	"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 2,
+
+	"name": "WordFox",
+	"description": "Awesome tool to research and suggest keywrods",
+	"version": "0.0.1",
+	"icons": {
+		"128": "icon_128.png",
+		"256": "icon_256.png"
+	},
+	"short_name": "WordFox",
+	"browser_action": {
+		"default_icon": "icon.png",
+		"title":"Word Fox",
+		"default_popup": "popup.html"
+	},
+	"permissions": [
+		"https://ajax.googleapis.com/",
+		"*://*.google.com/",
+		"https://suggestqueries.google.com/",
+		"https://clients1.google.com/",
+		"http://completion.amazon.com/",
+		"http://completion.amazon.co.uk/",
+		"http://completion.amazon.co.jp/",
+		"http://completion.amazon.cn/",
+		"http://www.dictionaryapi.com/"
+	]
+}
