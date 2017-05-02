@@ -1,11 +1,11 @@
-var WordFoxPro = (function() {
-	var _data = [],
+let WordFoxPro = (function() {
+	let _data = [],
 		_googleBaseUrl = "",
 		_amazonBaseUrl = "",
 		_dictionaryBaseUrl = "",
 		_cafeBaseUrl = "",
 
-		start = function(callback) {
+		start = function(keyword, callback) {
 			if (typeof callback === "function") {
 				callback();
 			}

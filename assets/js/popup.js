@@ -1,5 +1,6 @@
 let Popup = (() => {
 	let _temp = [],
+		_keyword = JSON.parse(localStorage._keyword || "null") || "",
         _wordFoxPro = WordFoxPro,
 		_startButton = $("#btn-search"),
 		_keywordBox = $("#keyword"),
@@ -9,6 +10,8 @@ let Popup = (() => {
 		},
 
 		start = function() {
+			_keyword = _keywordBox.val();
+			localStorage._keyword = JSON.stringify(_keyword);
 			_wordFoxPro.start(showResults);
 		},
 
@@ -17,8 +20,9 @@ let Popup = (() => {
 			_startButton.click(start);
 			_keywordBox.keydown(function(event) {
 				if (event.which == 13 || event.keyCode == 13) {
-					//code to execute here
-					start();
+					if ($(this).val()) {
+						start();
+					}
 				}
 				return true;
 			})
