@@ -3,7 +3,7 @@
 
 	"manifest_version": 2,
 
-	"name": "WordFox",
+	"name": "Word Fox Pro",
 	"description": "Awesome tool to research and suggest keywrods",
 	"version": "0.0.1",
 	"icons": {
@@ -14,8 +14,8 @@
 	"short_name": "WordFox",
 	"browser_action": {
 		"default_icon": "assets/images/16.png",
-		"title":"Word Fox",
-		"default_popup": "popup.html"
+		"title":"Word Fox Pro",
+		"default_popup": "assets/pages/popup.html"
 	},
 	"permissions": [
 		"https://ajax.googleapis.com/",
