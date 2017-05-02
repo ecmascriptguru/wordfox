@@ -10,8 +10,8 @@
 </html>
 <body>
 	<div class="wrapper">
-		<div class="header row">
-			<div class="col-xs-3 content-block" id="trending-hashtags">
+		<div class="header">
+			<div class="column left content-block" id="trending-hashtags">
 				<div class="heading">
 					Trending #HashTags
 				</div>
@@ -19,12 +19,12 @@
 					<li>Something</li>
 				</ul>
 			</div>
-			<div class="col-xs-6">
+			<div class="column center">
 				<a href="" class="logo-container">
 					<img class="logo" src="../images/logo.png" alt="Visit WordFox">
 				</a>
 			</div>
-			<div class="col-xs-3" id="similar-words">
+			<div class="column right" id="similar-words">
 				<div class="heading">
 					SIMILAR WORDS
 				</div>
@@ -33,8 +33,8 @@
 				</ul>
 			</div>
 		</div>
-		<div class="row main">
-			<div class="content-block col-xs-3">
+		<div class="main">
+			<div class="column left content-block">
 				<div class="heading">
 					Idea Generator
 				</div>
@@ -42,20 +42,22 @@
 					<li>something</li>
 				</ul>
 			</div>
-			<div class="col-xs-6">
-				<div class="row">
-					<div class="col-xs-9 form-group">
-						<input type="text" id="keyword" class="form-control" placeholder="Enter Keyword">
-					</div>
-					<div class="col-xs-3 form-group">
-						<button class="btn btn-primary form-control" id="btn-search">Search</button>
-					</div>
+			<div class="column center">
+				<div class="col-xs-9 form-group">
+					<input type="text" id="keyword" class="form-control" placeholder="Enter Keyword">
 				</div>
-				<div class="row">
-					
+				<div class="col-xs-3 form-group">
+					<button class="btn btn-primary form-control" id="btn-search">Search</button>
 				</div>
 			</div>
-			<div class="col-xs-3"></div>
+			<div class="column right content-block">
+				<div class="heading">
+					Keyword Ideas
+				</div>
+				<ul>
+					<li>Something</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 	<script src="../js/jquery.min.js"></script>
