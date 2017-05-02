@@ -1,4 +1,4 @@
-var WordFox = (function() {
+var WordFoxPro = (function() {
 	var _data = [],
 		init = function() {
 			console.log("initializing");

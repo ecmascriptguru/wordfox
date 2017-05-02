@@ -1,6 +1,9 @@
 let Popup = (() => {
 	let _temp = [],
+        _wordFoxPro = WordFoxPro,
+
 		init = () => {
+            _wordFoxPro.init();
 			console.log("initializing...");
 		};
 
