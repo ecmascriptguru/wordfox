@@ -5,15 +5,15 @@ let Popup = (() => {
 		_startButton = $("#btn-search"),
 		_keywordBox = $("#keyword"),
 
-		getKeyword = function() {
+		getKeyword = () => {
 			return _keyword;
 		},
 
-		showResults = function() {
+		showResults = () => {
 			//
 		},
 
-		start = function() {
+		start = () => {
 			_keyword = _keywordBox.val();
 			_wordFoxPro.start(_keyword, showResults);
 		},
