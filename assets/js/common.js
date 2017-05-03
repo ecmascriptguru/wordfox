@@ -10,9 +10,56 @@ let WordFoxPro = (() => {
 		_dictionaryBaseUrl = "http://www.dictionaryapi.com/api/v1/references/thesaurus/xml/",
 		_dictionaryKeyParams = "?key=cf6596ea-440b-42fb-9bbd-70a4525c8c95",
 		_cafeBaseUrl = "",
+		_chars = ["abcdefghijklmnopqrstuvwxyz"],
+
+		checkDictionary = function(keyword, callback) {
+			$.ajax({
+				url: _dictionaryBaseUrl + keyword + _dictionaryKeyParams,
+				method: "GET",
+				success: function(response) {
+					console.log(response);
+
+					if (typeof callback === "function") {
+						callback(response);
+					}
+				}
+			});
+		},
+
+		checkGoogle = function(keyword, callback) {
+			$.ajax({
+				url: _googleBaseUrl + keyword,
+				method: "GET",
+				success: function(response) {
+					console.log(response);
+
+					if (typeof callback === "function") {
+						callback(response);
+					}
+				}
+			});
+		},
+
+		checkAmazon = function(keyword, callback) {
+			$.ajax({
+				url: _amazonBaseUrl + keyword,
+				method: "GET",
+				success: function(response) {
+					console.log(response);
+
+					if (typeof callback === "function") {
+						callback(response);
+					}
+				}
+			});
+		},
 
 		start = (keyword, callback) => {
 			localStorage._keyword = JSON.stringify(keyword || "");
+
+			checkDictionary(keyword);
+			checkGoogle(keyword);
+			checkAmazon(keyword);
 			if (typeof callback === "function") {
 				callback();
 			}
