@@ -28,9 +28,7 @@ let Popup = (() => {
 					}
 				}
 				return true;
-			})
-
-			console.log("initializing...");
+			});
 		};
 
 	return {
