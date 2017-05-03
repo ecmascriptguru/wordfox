@@ -1,5 +1,6 @@
 let WordFoxPro = (() => {
 	let _data = [],
+		_step = 0,
 		_googleBaseUrl = "https://www.google.com/complete/search?client=serp&hl=en&" + 
 					"gs_rn=64&" + 
 					"gs_ri=serp&" + 
@@ -54,6 +55,13 @@ let WordFoxPro = (() => {
 			});
 		},
 
+		getStatus = function() {
+			return {
+				step: _step,
+				data: _data
+			};
+		},
+
 		start = (keyword, callback) => {
 			localStorage._keyword = JSON.stringify(keyword || "");
 
@@ -66,11 +74,12 @@ let WordFoxPro = (() => {
 		},
 		
 		init = () => {
-			console.log("initializing");
+			_step = 0;
 		};
 
 	return {
 		init: init,
+		status: getStatus,
 		start: start
 	};
 })();
