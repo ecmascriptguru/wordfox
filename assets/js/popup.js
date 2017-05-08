@@ -9,6 +9,7 @@ let Popup = (() => {
 		_keywordBox = $("#keyword"),
 		_resultsTable = $("#tbl-results"),
 		_resultsBody = _resultsTable.find("tbody"),
+		_dataTable = null,
 
 		getKeyword = () => {
 			return _keyword;
@@ -18,28 +19,47 @@ let Popup = (() => {
 			console.log(simWords);
 		},
 
+		saveItems = (items) => {
+			let curItems = JSON.parse(localStorage._data || "[]");
+			curItems = curItems.concat(items);
+			localStorage._data = JSON.stringify(curItems);
+		},
+
 		renderGoogleResults = (items) => {
+			let _items = [];
 			for (let i = 0; i < items.length; i ++) {
-				_resultsBody.append(
-					$("<tr/>").append(
-						$("<td/>").html(i + 1),
-						$("<td/>").html("google"),
-						$("<td/>").html(items[i][0])
-					)
-				)
+				_items.push({
+					rank: i + 1,
+					provider: "google",
+					keyword: items[i][0]
+				});
+				_dataTable.row.add([
+					i + 1,
+					"google",
+					items[i][0]
+				]).draw();
 			}
+
+			saveItems(_items);
 		},
 
 		renderAmazonResults = (items) => {
+			let _items = [];
 			for (let i = 0; i < items.length; i ++) {
-				_resultsBody.append(
-					$("<tr/>").append(
-						$("<td/>").html(i + 1),
-						$("<td/>").html("amazon"),
-						$("<td/>").html(items[i])
-					)
-				)
+				_items.push({
+					rank: i + 1,
+					provider: "amazon",
+					keyword: items[i]
+				});
+
+				_dataTable.row.add([
+					i + 1,
+					"amazon",
+					items[i]
+				]).draw();
 			}
+
+			saveItems(_items);
 		},
 
 		showResults = (provider, data) => {
@@ -59,8 +79,21 @@ let Popup = (() => {
 			}
 		},
 
+		renderSavedResults = (items) => {
+			_dataTable.clear();
+			for (let i = 0; i < items.length; i ++) {
+				_dataTable.row.add([
+					items[i].rank,
+					items[i].provider,
+					items[i].keyword
+				]).draw();
+			}
+		},
+
 		start = () => {
 			_keyword = _keywordBox.val();
+			localStorage._data = JSON.stringify([]);
+			_dataTable.clear();
 			_resultsTable.show();
 			_wordFoxPro.start(_keyword, showSimilarWords, showResults);
 		},
@@ -68,7 +101,9 @@ let Popup = (() => {
 		init = () => {
             _wordFoxPro.init();
 			_status = _wordFoxPro.status();
+			_dataTable = _resultsTable.DataTable();
 			_keywordBox.val(_status.keyword);
+			renderSavedResults(_status.data);
 			_startButton.click(start);
 			_keywordBox.keydown(function(event) {
 				if (event.which == 13 || event.keyCode == 13) {
