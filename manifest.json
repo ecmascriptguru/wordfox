@@ -17,6 +17,13 @@
 		"title":"Word Fox Pro",
 		"default_popup": "assets/pages/popup.html"
 	},
+	"background": {
+		"scripts": [
+			"assets/js/jquery.min.js",
+			"assets/js/common.js",
+			"assets/js/background.js"
+		]
+	},
 	"permissions": [
 		"https://ajax.googleapis.com/",
 		"*://*.google.com/",

@@ -1,6 +1,9 @@
+'use strict';
+
 let WordFoxPro = (() => {
 	let _data = [],
 		_step = 0,
+		_keyword = JSON.parse(localStorage._keyword || "null"),
 		_googleBaseUrl = "https://www.google.com/complete/search?client=serp&hl=en&" + 
 					"gs_rn=64&" + 
 					"gs_ri=serp&" + 
@@ -57,6 +60,7 @@ let WordFoxPro = (() => {
 
 		getStatus = function() {
 			return {
+				keyword: _keyword,
 				step: _step,
 				data: _data
 			};
