@@ -3,6 +3,7 @@
 let WordFoxPro = (() => {
 	let _data = JSON.parse(localStorage._data || "[]"),
 		_step = JSON.parse(localStorage._step || "0"),
+		_suggestions = JSON.parse(localStorage._suggestions || "[]"),
 		_keyword = JSON.parse(localStorage._keyword || "null"),
 		_googleBaseUrl = "https://www.google.com/complete/search?client=serp&hl=en&" + 
 					"gs_rn=64&" + 
@@ -21,10 +22,10 @@ let WordFoxPro = (() => {
 				url: _dictionaryBaseUrl + keyword + _dictionaryKeyParams,
 				method: "GET",
 				success: function(response) {
-					console.log(response);
-
 					if (typeof callback === "function") {
 						callback(response);
+					} else {
+						console.log(response);
 					}
 				}
 			});
@@ -71,6 +72,7 @@ let WordFoxPro = (() => {
 		getStatus = function() {
 			return {
 				keyword: _keyword,
+				suggestions: _suggestions,
 				step: _step,
 				data: _data
 			};

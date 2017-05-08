@@ -21,3 +21,10 @@ div.header {
         div.header img.logo {
             height: 100%;
             width: auto;}
+
+div#similar-words ul {
+    max-height: 90px;
+    overflow-y: scroll;
+    width: 182px;
+    padding-left: 15px;
+}

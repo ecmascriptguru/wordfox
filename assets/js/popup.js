@@ -4,6 +4,7 @@ let Popup = (() => {
 	let _temp = [],
 		_status = null,
 		_keyword = JSON.parse(localStorage._keyword || "null") || "",
+		_similarWords = $("#similar-words ul"),
         _wordFoxPro = WordFoxPro,
 		_startButton = $("#btn-search"),
 		_keywordBox = $("#keyword"),
@@ -15,8 +16,36 @@ let Popup = (() => {
 			return _keyword;
 		},
 
+		renderSuggestions = function(words) {
+			_similarWords.children().remove();
+
+			for (let i = 0; i < words.length; i ++) {
+				_similarWords.append(
+					$("<li/>").text(words[i])
+				);
+			}
+			
+		},
+
 		showSimilarWords = (simWords) => {
-			console.log(simWords);
+			if ($(simWords).find("entry sens rel").length == 0) {
+				if ($(simWords).find("suggestion").length > 0) {
+					let _rel = $(simWords).find("suggestion"),
+						words = [];
+					
+					for (let i = 0; i < _rel.length; i ++) {
+						words.push(_rel.eq(i).text());
+					}
+					localStorage._suggestions = JSON.stringify(words);
+					renderSuggestions(words);
+				}
+			} else {
+				let _rel = $(simWords).find("entry sens rel").eq(0).text(),
+					words = _rel.split(", ");
+
+				localStorage._suggestions = JSON.stringify(words);
+				renderSuggestions(words);
+			}
 		},
 
 		saveItems = (items) => {
@@ -93,6 +122,7 @@ let Popup = (() => {
 		start = () => {
 			_keyword = _keywordBox.val();
 			localStorage._data = JSON.stringify([]);
+			localStorage._suggestions = JSON.stringify([]);
 			_dataTable.clear();
 			_resultsTable.show();
 			_wordFoxPro.start(_keyword, showSimilarWords, showResults);
@@ -104,6 +134,7 @@ let Popup = (() => {
 			_dataTable = _resultsTable.DataTable();
 			_keywordBox.val(_status.keyword);
 			renderSavedResults(_status.data);
+			renderSuggestions(_status.suggestions);
 			_startButton.click(start);
 			_keywordBox.keydown(function(event) {
 				if (event.which == 13 || event.keyCode == 13) {
