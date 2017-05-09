@@ -12,9 +12,9 @@ let WordFoxPro = (() => {
 		_amazonBaseUrl = "http://completion.amazon.com/search/complete?method=completion&mkt=1" +
 					"&client=amazon-search-ui&search-alias=aps" + 
 					"&qs=&cf=1&noCacheIE=1439383634993&fb=1&sc=1&q=",
+		_cafePressBaseUrl = "http://www.cafepress.com/cp/catalogexp/suggestion.asmx/AutoComplete?s=",
 		_dictionaryBaseUrl = "http://www.dictionaryapi.com/api/v1/references/thesaurus/xml/",
 		_dictionaryKeyParams = "?key=cf6596ea-440b-42fb-9bbd-70a4525c8c95",
-		_cafeBaseUrl = "",
 		_chars = " abcdefghijklmnopqrstuvwxyz",
 
 		checkDictionary = function(keyword, callback) {
@@ -69,6 +69,43 @@ let WordFoxPro = (() => {
 			});
 		},
 
+		checkCafePress = function(keyword, step, callback) {
+			// step = parseInt(step);
+			// if (step > _chars.length - 1) {
+			// 	return false;
+			// }
+
+			// let request = new XMLHttpRequest;
+			// request.open("GET", _cafePressBaseUrl + (keyword + " " + _chars[step]).trim(), !0);
+			// request.onreadystatechange = () => {
+			// 	if (request.status == 403) {
+			// 		alert("cafepress has blocked us. We can continue later.");
+			// 	} else if (request.status == 400) {
+			// 		alert("Got an error.");
+			// 	} else if (request.readyState == 4 && request.status == 200) {
+			// 		let response = (new DOMParser).parseFromString(request.responseText, "text/xml").querySelector("string");
+			// 		if (typeof callback == "function") {
+			// 			callback(response);
+			// 		}
+			// 	}
+			// };
+			// request.setRequestHeader("Origin", null);
+			// request.send();
+			// $.ajax({
+			// 	url: _cafePressBaseUrl + (keyword + " " + _chars[step]).trim(),
+			// 	method: "GET",
+			// 	success: function(response) {
+			// 		// checkCafePress(keyword, step + 1, callback);
+			// 		// let data = JSON.parse(response);
+			// 		console.log(response);
+
+			// 		// if (data.length > 2 && typeof callback === "function") {
+			// 		// 	callback("amazon", data[1]);
+			// 		// }
+			// 	}
+			// });
+		},
+
 		getStatus = function() {
 			return {
 				keyword: _keyword,
@@ -82,6 +119,7 @@ let WordFoxPro = (() => {
 			let curStep = _step;
 			checkGoogle(keyword, curStep, callback);
 			checkAmazon(keyword, curStep, callback);
+			checkCafePress(keyword, curStep, callback);
 		},
 
 		start = (keyword, dictCallback, resultsCallback) => {
