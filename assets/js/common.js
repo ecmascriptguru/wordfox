@@ -40,7 +40,7 @@ let WordFoxPro = (() => {
 				url: _googleBaseUrl + (keyword + " " + _chars[step]).trim(),
 				method: "GET",
 				success: function(response) {
-					// checkGoogle(keyword, step + 1, callback);
+					checkGoogle(keyword, step + 1, callback);
 					if (typeof callback === "function") {
 						if (response.length > 2) {
 							callback("google", response[1]);
@@ -59,7 +59,7 @@ let WordFoxPro = (() => {
 				url: _amazonBaseUrl + (keyword + " " + _chars[step]).trim(),
 				method: "GET",
 				success: function(response) {
-					// checkAmazon(keyword, step + 1, callback);
+					checkAmazon(keyword, step + 1, callback);
 					let data = JSON.parse(response);
 
 					if (data.length > 2 && typeof callback === "function") {
@@ -88,6 +88,7 @@ let WordFoxPro = (() => {
 					for (let i = 0; i < tags.length; i ++) {
 						words.push(tags.eq(i).text());
 					}
+					checkCafePress(keyword, step + 1, callback);
 					if (typeof callback == "function") {
 						callback("cafepress", words);
 					}
