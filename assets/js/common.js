@@ -89,7 +89,7 @@ let WordFoxPro = (() => {
 						words.push(tags.eq(i).text());
 					}
 					if (typeof callback == "function") {
-						callback(words);
+						callback("cafepress", words);
 					}
 				}
 			};

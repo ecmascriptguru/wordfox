@@ -91,6 +91,25 @@ let Popup = (() => {
 			saveItems(_items);
 		},
 
+		renderCafeResults = (items) => {
+			let _items = [];
+			for (let i = 0; i < items.length; i ++) {
+				_items.push({
+					rank: i + 1,
+					provider: "cafepress",
+					keyword: items[i]
+				});
+
+				_dataTable.row.add([
+					i + 1,
+					"cafepress",
+					items[i]
+				]).draw();
+			}
+
+			saveItems(_items);
+		},
+
 		showResults = (provider, data) => {
 			console.log(provider, data);
 			switch(provider) {
@@ -100,6 +119,10 @@ let Popup = (() => {
 
 				case "amazon":
 					renderAmazonResults(data);
+					break;
+
+				case "cafepress":
+					renderCafeResults(data);
 					break;
 
 				default:
