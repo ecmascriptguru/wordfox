@@ -45,8 +45,10 @@ div.logo-container image {
         height: 200px;}
     ul#keyword-ideas {
         height: 175px;}
+        #controllers-container {
+            height: 52px;}
     .content-block div.input-container {
-        padding-top: 7px;
+        padding-top: 10px;
         float: left;
         width: 65%;}
     .content-block div.button-container {
@@ -55,6 +57,22 @@ div.logo-container image {
         width: 35%;}
         .content-block div.button-container button {
             width: 95%;}
+    .content-block .sources-container {
+        float: left;
+        padding-top: 45px;
+        width: 14%;}
+        .content-block .sources-container .source-container {
+            width: 100%;
+            clear: both;}
+            .content-block .sources-container .source-container img {
+                margin-bottom: 7px;
+                cursor: pointer;
+                width: 94%;}
+    .content-block .results-container {
+        float: left;
+        width: 84%;}
+        .content-block .results-container #results {
+            height: 315px;}
 
 img.merch_ping_img {
     width: 100%;
@@ -62,7 +80,7 @@ img.merch_ping_img {
     margin-top: 3px;}
 button {
     height: 35px;
-    margin-top: 7px;
+    margin-top: 9px;
     border: honeydew;
     border-radius: 6px;
     text-align: center;
