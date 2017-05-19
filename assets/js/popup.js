@@ -8,9 +8,7 @@ let Popup = (() => {
         _wordFoxPro = WordFoxPro,
 		_startButton = $("#btn-search"),
 		_keywordBox = $("#keyword"),
-		_resultsTable = $("#tbl-results"),
-		_resultsBody = _resultsTable.find("tbody"),
-		_dataTable = null,
+		_resultBlock = $("ul#results"),
 
 		getKeyword = () => {
 			return _keyword;
@@ -62,11 +60,17 @@ let Popup = (() => {
 					provider: "google",
 					keyword: items[i][0]
 				});
-				_dataTable.row.add([
-					i + 1,
-					"google",
-					items[i][0]
-				]).draw();
+				_resultBlock.append(
+					$("<li/>").addClass("result-row google").append(
+						$("<div/>").addClass("rank").text(i + 1),
+						$("<div/>").addClass("keyword").html(items[i][0])
+					)
+				);
+				// _dataTable.row.add([
+				// 	i + 1,
+				// 	"google",
+				// 	items[i][0]
+				// ]).draw();
 			}
 
 			saveItems(_items);
@@ -81,11 +85,18 @@ let Popup = (() => {
 					keyword: items[i]
 				});
 
-				_dataTable.row.add([
-					i + 1,
-					"amazon",
-					items[i]
-				]).draw();
+				_resultBlock.append(
+					$("<li/>").addClass("result-row amazon").append(
+						$("<div/>").addClass("rank").text(i + 1),
+						$("<div/>").addClass("keyword").html(items[i])
+					)
+				);
+
+				// _dataTable.row.add([
+				// 	i + 1,
+				// 	"amazon",
+				// 	items[i]
+				// ]).draw();
 			}
 
 			saveItems(_items);
@@ -100,11 +111,18 @@ let Popup = (() => {
 					keyword: items[i]
 				});
 
-				_dataTable.row.add([
-					i + 1,
-					"cafepress",
-					items[i]
-				]).draw();
+				_resultBlock.append(
+					$("<li/>").addClass("result-row cafepress").append(
+						$("<div/>").addClass("rank").text(i + 1),
+						$("<div/>").addClass("keyword").html(items[i])
+					)
+				);
+
+				// _dataTable.row.add([
+				// 	i + 1,
+				// 	"cafepress",
+				// 	items[i]
+				// ]).draw();
 			}
 
 			saveItems(_items);
@@ -132,13 +150,19 @@ let Popup = (() => {
 		},
 
 		renderSavedResults = (items) => {
-			_dataTable.clear();
+			_resultBlock.children().remove();
 			for (let i = 0; i < items.length; i ++) {
-				_dataTable.row.add([
-					items[i].rank,
-					items[i].provider,
-					items[i].keyword
-				]).draw();
+				_resultBlock.append(
+					$("<li/>").addClass("result-row " + items[i].provider).append(
+						$("<div/>").addClass("rank").text(items[i].rank),
+						$("<div/>").addClass("keyword").html(items[i].keyword)
+					)
+				);
+				// _dataTable.row.add([
+				// 	items[i].rank,
+				// 	items[i].provider,
+				// 	items[i].keyword
+				// ]).draw();
 			}
 		},
 
@@ -146,15 +170,15 @@ let Popup = (() => {
 			_keyword = _keywordBox.val();
 			localStorage._data = JSON.stringify([]);
 			localStorage._suggestions = JSON.stringify([]);
-			_dataTable.clear();
-			_resultsTable.show();
+			// _dataTable.clear();
+			// _resultsTable.show();
+			_resultBlock.children().remove();
 			_wordFoxPro.start(_keyword, showSimilarWords, showResults);
 		},
 
 		init = () => {
             _wordFoxPro.init();
 			_status = _wordFoxPro.status();
-			_dataTable = _resultsTable.DataTable();
 			_keywordBox.val(_status.keyword);
 			renderSavedResults(_status.data);
 			renderSuggestions(_status.suggestions);
