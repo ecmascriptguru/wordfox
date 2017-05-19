@@ -72,7 +72,19 @@ div.logo-container image {
         float: left;
         width: 84%;}
         .content-block .results-container #results {
+            padding-left: 5px;
+            overflow-y: auto;
+            overflow-x: auto;
             height: 315px;}
+            .content-block .results-container #results li {
+                clear: both;
+                list-style: none;}
+                .content-block .results-container #results li div.rank {
+                    float: left;
+                    width: 17px;}
+                .content-block .results-container #results li div.keyword {
+                    width: 191px;
+                    float: left;}
 
 img.merch_ping_img {
     width: 100%;
