@@ -1,6 +1,11 @@
 * {
     box-sizing: border-box;}
 .wrapper {
+    height: 600px;
+    background: url(../images/bg.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding: 20px;
     width: 780PX;}
     .wrapper .content-block {
         padding: 10px 10px 0 10px;}
