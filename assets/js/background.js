@@ -1,12 +1,12 @@
 'use strict';
 
 let Background = (function() {
-    let _wordFox = WordFoxPro,
-        _data = [],
+    let _wordFox = null,// WordFoxPro,
+        _data = [];
 
-        init = function() {
-            _wordFox.init();
-        };
+    let init = function() {
+        // _wordFox.init();
+    };
 
     return {
         init: init

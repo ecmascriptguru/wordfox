@@ -70,40 +70,30 @@ let WordFoxPro = (() => {
 		},
 
 		checkCafePress = function(keyword, step, callback) {
-			// step = parseInt(step);
-			// if (step > _chars.length - 1) {
-			// 	return false;
-			// }
+			step = parseInt(step);
+			if (step > _chars.length - 1) {
+				return false;
+			}
 
-			// let request = new XMLHttpRequest;
-			// request.open("GET", _cafePressBaseUrl + (keyword + " " + _chars[step]).trim(), !0);
-			// request.onreadystatechange = () => {
-			// 	if (request.status == 403) {
-			// 		alert("cafepress has blocked us. We can continue later.");
-			// 	} else if (request.status == 400) {
-			// 		alert("Got an error.");
-			// 	} else if (request.readyState == 4 && request.status == 200) {
-			// 		let response = (new DOMParser).parseFromString(request.responseText, "text/xml").querySelector("string");
-			// 		if (typeof callback == "function") {
-			// 			callback(response);
-			// 		}
-			// 	}
-			// };
-			// request.setRequestHeader("Origin", null);
-			// request.send();
-			// $.ajax({
-			// 	url: _cafePressBaseUrl + (keyword + " " + _chars[step]).trim(),
-			// 	method: "GET",
-			// 	success: function(response) {
-			// 		// checkCafePress(keyword, step + 1, callback);
-			// 		// let data = JSON.parse(response);
-			// 		console.log(response);
-
-			// 		// if (data.length > 2 && typeof callback === "function") {
-			// 		// 	callback("amazon", data[1]);
-			// 		// }
-			// 	}
-			// });
+			let request = new XMLHttpRequest;
+			request.open("GET", _cafePressBaseUrl + (keyword + " " + _chars[step]).trim(), !0);
+			request.onreadystatechange = () => {
+				if (request.status == 403) {
+					alert("cafepress has blocked us. We can continue later.");
+				} else if (request.status == 400) {
+					alert("Got an error.");
+				} else if (request.readyState == 4 && request.status == 200) {
+					let tags = $(request.responseText).find("string");
+					let words = [];
+					for (let i = 0; i < tags.length; i ++) {
+						words.push(tags.eq(i).text());
+					}
+					if (typeof callback == "function") {
+						callback(words);
+					}
+				}
+			};
+			request.send();
 		},
 
 		getStatus = function() {
