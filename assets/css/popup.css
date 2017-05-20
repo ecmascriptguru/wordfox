@@ -28,6 +28,8 @@ div.logo-container image {
         font-size: 16px;
         padding: 6px 10px;}
     .content-block ul {
+        overflow-y: auto;
+        overflow-x: auto;
         background: rgba(255,255,255,0.2);
         padding-top: 6px;
         padding-left: 14px;

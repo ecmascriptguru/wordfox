@@ -4,7 +4,7 @@ let Popup = (() => {
 	let _temp = [],
 		_status = null,
 		_keyword = JSON.parse(localStorage._keyword || "null") || "",
-		_similarWords = $("#similar-words ul"),
+		_similarWords = $("#similar-words"),
         _wordFoxPro = WordFoxPro,
 		_startButton = $("#btn-search"),
 		_keywordBox = $("#keyword"),
@@ -66,11 +66,6 @@ let Popup = (() => {
 						$("<div/>").addClass("keyword").html(items[i][0])
 					)
 				);
-				// _dataTable.row.add([
-				// 	i + 1,
-				// 	"google",
-				// 	items[i][0]
-				// ]).draw();
 			}
 
 			saveItems(_items);
@@ -91,12 +86,6 @@ let Popup = (() => {
 						$("<div/>").addClass("keyword").html(items[i])
 					)
 				);
-
-				// _dataTable.row.add([
-				// 	i + 1,
-				// 	"amazon",
-				// 	items[i]
-				// ]).draw();
 			}
 
 			saveItems(_items);
@@ -117,12 +106,6 @@ let Popup = (() => {
 						$("<div/>").addClass("keyword").html(items[i])
 					)
 				);
-
-				// _dataTable.row.add([
-				// 	i + 1,
-				// 	"cafepress",
-				// 	items[i]
-				// ]).draw();
 			}
 
 			saveItems(_items);
@@ -158,11 +141,6 @@ let Popup = (() => {
 						$("<div/>").addClass("keyword").html(items[i].keyword)
 					)
 				);
-				// _dataTable.row.add([
-				// 	items[i].rank,
-				// 	items[i].provider,
-				// 	items[i].keyword
-				// ]).draw();
 			}
 		},
 
@@ -170,8 +148,6 @@ let Popup = (() => {
 			_keyword = _keywordBox.val();
 			localStorage._data = JSON.stringify([]);
 			localStorage._suggestions = JSON.stringify([]);
-			// _dataTable.clear();
-			// _resultsTable.show();
 			_resultBlock.children().remove();
 			_wordFoxPro.start(_keyword, showSimilarWords, showResults);
 		},
