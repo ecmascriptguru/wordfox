@@ -68,19 +68,30 @@ div.logo-container image {
             clear: both;}
             .content-block .sources-container .source-container img {
                 margin-bottom: 7px;
+                border-radius: 20px;
                 cursor: pointer;
                 width: 94%;}
+                /*.content-block .sources-container .source-container img.active {
+                    border: solid 1px greenyellow;}*/
     .content-block .results-container {
         float: left;
         width: 84%;}
         .content-block .results-container #results {
-            padding-left: 5px;
+            padding: 0;
             overflow-y: auto;
             overflow-x: auto;
             height: 315px;}
             .content-block .results-container #results li {
+                display: flex;
+                padding: 1px 3px;
                 clear: both;
                 list-style: none;}
+                .content-block .results-container #results li.amazon {
+                    background: orange;}
+                .content-block .results-container #results li.google {
+                    background: green;}
+                .content-block .results-container #results li.google {
+                    background: grey;}
                 .content-block .results-container #results li div.rank {
                     float: left;
                     width: 17px;}

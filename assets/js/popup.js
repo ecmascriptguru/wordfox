@@ -167,6 +167,19 @@ let Popup = (() => {
 				}
 				return true;
 			});
+
+			$(".source-container img").click((event) => {
+				let target = event.target.getAttribute("data-target"),
+					isActive = (event.target.className.split(" ").indexOf("active") > -1);
+
+				if (isActive) {
+					$("#results li." + target).removeClass("hide");
+					$(event.target).removeClass("active");
+				} else {
+					$("#results li." + target).addClass("hide");
+					$(event.target).addClass("active");
+				}
+			})
 		};
 
 	return {
