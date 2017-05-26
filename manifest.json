@@ -38,8 +38,11 @@
     }
   ],
 	"permissions": [
+		"tabs",
+		"storage",
 		"https://ajax.googleapis.com/",
 		"*://*.google.com/",
+		"*://*.pinterest.com/*",
 		"https://suggestqueries.google.com/",
 		"https://clients1.google.com/",
 		"http://completion.amazon.com/",

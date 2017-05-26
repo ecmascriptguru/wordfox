@@ -182,7 +182,17 @@ let Popup = (() => {
 					$("#results li." + target).addClass("hide");
 					$(event.target).addClass("active");
 				}
-			})
+			});
+
+			_btnPinterest.click(() => {
+				chrome.tabs.query({url: "https://www.pinterest.com/*"}, function(tabs) {
+					if (tabs.length > 0) {
+						chrome.tabs.update(tabs[0].id, {active:true, url: "https://www.pinterest.com/search/pins/?q=t%20shirts"});
+					} else {
+						chrome.tabs.create({url: "https://www.pinterest.com/search/pins/?q=t%20shirts"});
+					}
+				});
+			});
 		};
 
 	return {
