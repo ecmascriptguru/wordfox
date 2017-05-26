@@ -9,6 +9,9 @@ let Popup = (() => {
 		_startButton = $("#btn-search"),
 		_keywordBox = $("#keyword"),
 		_resultBlock = $("ul#results"),
+		_btnPinterest = $("#search-pinterest"),
+		_btnNumberPage = $("#number-of-pages"),
+		_btnOptimize = $("#merch-optimize"),
 
 		getKeyword = () => {
 			return _keyword;

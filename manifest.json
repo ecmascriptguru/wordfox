@@ -24,6 +24,19 @@
 			"assets/js/background.js"
 		]
 	},
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "run_at": "document_end",
+      "matches": [
+		  "*://*.pinterest.com/*"
+      ],
+      "js": [
+        "assets/js/jquery.min.js",
+        "assets/js/content.js"
+      ]
+    }
+  ],
 	"permissions": [
 		"https://ajax.googleapis.com/",
 		"*://*.google.com/",
