@@ -3,7 +3,19 @@ let Pinterest = (function() {
         something = null;
 
     let init = () => {
-        //
+        chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+            switch(request.from) {
+                case "popup":
+                    if (request.action == "reorder") {
+                        console.log(request);
+                    }
+                    break;
+
+                default:
+                    console.log("Unknown request detected.");
+                    break;
+            }
+        });
     };
 
     return {
@@ -13,5 +25,4 @@ let Pinterest = (function() {
 
 (function(window, jQuery) {
     Pinterest.init();
-    console.log("Hello");
 })(window, $);
