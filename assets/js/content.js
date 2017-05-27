@@ -96,11 +96,16 @@ var loadRepins = (function() {
 
 }());
 
+
+
 chrome.runtime.onMessage.addListener(
     function(request) {
         if (request.message === "sort_by_repins") {
             console.log("Sort by repins");
             loadRepins(request.pages);
+        } else if (request.message == "sort_by_likes") {
+            // console.log("Sort by likes");
+            // loadLikes(request.pages);
         }
     }
 );
