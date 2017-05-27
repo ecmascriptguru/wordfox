@@ -10,7 +10,7 @@ let Popup = (() => {
 		_keywordBox = $("#keyword"),
 		_resultBlock = $("ul#results"),
 		_btnPinterest = $("#search-pinterest"),
-		_btnNumberPage = $("#number-of-pages"),
+		_numPages = $("#number-of-pages"),
 		_btnOptimize = $("#merch-optimize"),
 
 		getKeyword = () => {
@@ -195,12 +195,13 @@ let Popup = (() => {
 			});
 
 			_btnOptimize.click(() => {
+				let pages = parseInt(_numPages.val() || 5);
 				chrome.tabs.query({active: true}, (tabs) => {
 					if (tabs[0].url.indexOf("https://www.pinterest.com/") == 0) {
 						chrome.tabs.sendMessage(tabs[0].id, {
 							"message": "sort_by_repins",
 							// "message": "sort_by_likes",
-							"pages": 5
+							"pages": pages
 						});
 					} else {
 						_btnPinterest.click();
