@@ -1,98 +1,106 @@
-let Pinterest = (function() {
-    let _status = false,
-        widthMargin = 24,
-        heightMargin = 24;
+var loadRepins = (function() {
 
-    let getColumns = (pWidth, cWidth) => {
-        return (pWidth + widthMargin) / (cWidth + widthMargin);
-    };
+    var pages = 5;
+    var count = 0;
+    var mylist = [];
+    var timeout;
 
-    let reorder = () => {
-        let posts = $("._4f"),
-            pins = [],
-            heights = [],
-            cols = getColumns(posts.eq(0).parent().innerWidth(), posts.eq(0).width());
+    function load() {
 
-        for (let i = 0; i < posts.length; i ++) {
-            let pinCounts = posts.eq(i).find(".socialMetaCount.repinCountSmall span").text().trim();
-            if (pinCounts.match(/k/g)) {
-                pinCounts = parseFloat(pinCounts.replace(/k/g, '')) * 1000;
-            } else if (pinCounts.match(/m/g)) {
-                pinCounts = parseFloat(pinCounts.replace(/m/g, '')) * 1000000;
-            } else {
-                pinCounts = parseFloat(pinCounts);
-            }
-            pins.push({
-                index: i,
-                count: pinCounts,
-                width: posts.eq(i).width(),
-                height: posts.eq(i).height()
-            });
-        }
+        $('.Pin').each(function() {
+            mylist.push($(this)[0])
+        });
 
-        for (let i = 0; i < pins.length - 1; i ++) {
-            for (let j = i + 1; j < pins.length; j ++) {
-                if (pins[i].count < pins[j].count) {
-                    let temp = pins[i];
-                    pins[i] = pins[j];
-                    pins[j] = temp;
-                }
-            }
-        }
+        if (pages > 0) {
 
-        let getTransY = (rIn, cIn) => {
-            let result = 0;
-            rIn--;
-            while(rIn > -1) {
-                result += (pins[rIn * cols + cIn].height + heightMargin);
-                rIn--;
-            }
-            return result;
-        }
+            $(window).scrollTop($(document).height());
 
-        //  Rearrange
-        for (let i = 0; i < pins.length; i ++) {
-            let curPost = posts.eq(pins[i].index),
-                rowIndex = parseInt(i / cols),
-                colIndex = i % cols;
-            
-            if (!heights[colIndex]) {
-                heights[colIndex] = 0;
+            timeout = window.setTimeout(load, 4000);
+
+            count++;
+            if (count == pages) {
+                finish();
             }
 
-            let transX = 0 + colIndex * (pins[i].width + widthMargin);
-            // let transY = getTransY(rowIndex, colIndex);
-            curPost.css({
-                "transform": `translateX(${transX}px) translateY(${heights[colIndex]}px)`
-            });
-            heights[colIndex] += posts.eq(pins[i].index).height();
+        } else {
+            finish();
         }
-
-        console.log(pins);
     }
 
+    function finish() {
 
-    let init = () => {
-        chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-            switch(request.from) {
-                case "popup":
-                    if (request.action == "reorder") {
-                        reorder();
-                    }
-                    break;
+        window.clearTimeout(timeout);
 
-                default:
-                    console.log("Unknown request detected.");
-                    break;
+        var list = mylist.filter(function(f) {
+            if ($(f).find('.repinIconSmall').length > 0) {
+                return f;
             }
         });
-    };
 
-    return {
-        init: init
+        list.sort(function(a, b) {
+            var compAText = $(a).find('.repinIconSmall').next().text().trim(),
+                compBText = $(b).find('.repinIconSmall').next().text().trim();
+            // var compA = Number(compAText.replace(/[^0-9]/g, ''));
+            // var compB = Number(compBText.replace(/[^0-9]/g, ''));
+            var compA = turnK(compAText);
+            var compB = turnK(compBText);
+            return (compA == compB) ? 0 : (compA > compB) ? -1 : 1;
+        });
+
+        if ($(".Grid").length) {
+            $(".Grid").before('<div id="organized"></div>');
+        } else {
+            $(".gridCentered").before('<div id="organized"></div>');
+        }
+
+
+        $.each(list, function(idx, itm) {
+            $("#organized").append($(itm));
+        });
+
+        $('.Pin').css({
+            'position': 'relative',
+            'top': 'auto',
+            'left': 'auto',
+            'display': 'inline-block',
+            'vertical-align': 'top',
+            'margin-left': 10
+        });
+
+        if ($(".Grid").length) {
+            $(".Grid").remove();
+        } else {
+            $(".gridCentered").remove();
+        }
     }
-})();
 
-(function(window, jQuery) {
-    Pinterest.init();
-})(window, $);
+    function turnK(text) {
+        var number = Number(text.replace(/[^0-9]/g, ''));
+        if (text.indexOf("k") !== -1) {
+            number = number * 1000;
+        }
+        return number;
+    }
+
+    function resetValues(pageCount, initialCount, list) {
+        pages = pageCount;
+        count = initialCount;
+        mylist = list;
+        clearTimeout(timeout);
+    }
+
+    return function(page) {
+        resetValues(page, 0, []);
+        load();
+    }
+
+}());
+
+chrome.runtime.onMessage.addListener(
+    function(request) {
+        if (request.message === "sort_by_repins") {
+            console.log("Sort by repins");
+            loadRepins(request.pages);
+        }
+    }
+);

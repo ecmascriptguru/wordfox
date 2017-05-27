@@ -197,12 +197,16 @@ let Popup = (() => {
 			_btnOptimize.click(() => {
 				chrome.tabs.query({active: true}, (tabs) => {
 					if (tabs[0].url.indexOf("https://www.pinterest.com/") == 0) {
+						// chrome.tabs.sendMessage(tabs[0].id, {
+						// 	from: "popup",
+						// 	action: "reorder"
+						// }, (response) => {
+						// 	console.log(response);
+						// })
 						chrome.tabs.sendMessage(tabs[0].id, {
-							from: "popup",
-							action: "reorder"
-						}, (response) => {
-							console.log(response);
-						})
+							"message": "sort_by_repins",
+							"pages": 5
+						});
 					} else {
 						_btnPinterest.click();
 					}
