@@ -51,5 +51,8 @@
 		"http://completion.amazon.cn/",
 		"http://www.dictionaryapi.com/",
 		"http://www.cafepress.com/"
-	]
+	],
+	"web_accessible_resources": [
+      "assets/images/*"
+  ]
 }
