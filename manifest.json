@@ -5,7 +5,7 @@
 
 	"name": "Word Fox Pro",
 	"description": "Awesome tool to research and suggest keywrods",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"icons": {
 		"16": "assets/images/16.png",
 		"128": "assets/images/128.png",
