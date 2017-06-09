@@ -1,0 +1,58 @@
+{
+	"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 2,
+
+	"name": "Word Fox Pro",
+	"description": "Awesome tool to research and suggest keywrods",
+	"version": "0.0.3",
+	"icons": {
+		"16": "assets/images/16.png",
+		"128": "assets/images/128.png",
+		"256": "assets/images/256.png"
+	},
+	"short_name": "WordFox",
+	"browser_action": {
+		"default_icon": "assets/images/16.png",
+		"title":"Word Fox Pro",
+		"default_popup": "assets/pages/popup.html"
+	},
+	"background": {
+		"scripts": [
+			"assets/js/jquery.min.js",
+			"assets/js/common.js",
+			"assets/js/background.js"
+		]
+	},
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "run_at": "document_end",
+      "matches": [
+		  "*://*.pinterest.com/*"
+      ],
+      "js": [
+        "assets/js/jquery.min.js",
+        "assets/js/content.js"
+      ]
+    }
+  ],
+	"permissions": [
+		"tabs",
+		"storage",
+		"https://ajax.googleapis.com/",
+		"*://*.google.com/",
+		"*://*.pinterest.com/*",
+		"https://suggestqueries.google.com/",
+		"https://clients1.google.com/",
+		"http://completion.amazon.com/",
+		"http://completion.amazon.co.uk/",
+		"http://completion.amazon.co.jp/",
+		"http://completion.amazon.cn/",
+		"http://www.dictionaryapi.com/",
+		"http://www.cafepress.com/"
+	],
+	"web_accessible_resources": [
+      "assets/images/*"
+  ]
+}
