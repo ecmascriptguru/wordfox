@@ -6,7 +6,7 @@ let loadRepins = (function() {
     let timeout;
 
     function load() {
-        $('.Pin').each(function() {
+        $(`[data-grid-item="true"]`).each(function() {
             mylist.push($(this)[0])
         });
 
@@ -27,7 +27,7 @@ let loadRepins = (function() {
     }
 
     function getColsCount() {
-        let width = $(".Pin").parents("._4e").innerWidth(),
+        let width = $(".Pin").parents(".gridCentered").eq(0).innerWidth(),
             postWidth = 236,
             horGap = 24;
 
@@ -67,8 +67,16 @@ let loadRepins = (function() {
 
         if ($(".Grid").length) {
             $(".Grid").before('<div id="organized" style="margin:0 12px;"></div>');
-        } else {
+        } else if ($("._4e.relative").length > 0) {
             $("._4e.relative").before('<div id="organized" style="margin:0 12px;"></div>');
+        } else if ($(".gridCentered").length > 0) {
+            $(".gridCentered").eq($(".gridCentered").length - 1).before('<div id="organized" style="margin:0 12px;position:relative;"></div>');
+            $(".gridCentered").eq($(".gridCentered").length - 1).hide()
+        } else {            
+            // $("._tr._2a").before('<div id="organized" style="margin:0 12px;"></div>');
+            $("._u8._2f").before('<div id="organized" style="margin:0 12px;position:relative"></div>');
+            $("._u8._2f").hide();
+            // $("._u8._2f").attr({id: "organized"}).children().remove();
         }
 
         let setPosition = (itm) => {
@@ -100,8 +108,13 @@ let loadRepins = (function() {
         if ($(".Grid").length) {
             $(".Grid").remove();
         } else {
-            $("._4e.relative").remove();
-            $("#organized").addClass("_4e relative");
+            if ($("._4e.relative").length > 0) {
+                $("._4e.relative").remove();
+                $("#organized").addClass("_4e relative");
+            } else if ($("._tr._2a").length > 0) {
+                $("._tr._2a").remove();
+                $("#organized").addClass("_tr _2a");
+            }
             // $(".gridCentered").remove();
         }
 
@@ -113,6 +126,7 @@ let loadRepins = (function() {
         });
         $("#organized").height(containerHeight);
         reorderIsDone();
+        downloadImg.init();
     }
 
     function turnK(text) {
@@ -145,15 +159,53 @@ let loadRepins = (function() {
 }());
 
 
+let downloadImg = (function() {
+    let img = null;
+    
+
+    const getImgUrl = () => {
+        return img;
+    }
+
+    const initContextMenu = () => {
+        $(document).ready(() => {
+            $(document).on("contextmenu", "div.dimOverlay", (event) => {
+                let imgTag = $(event.target).parents("[data-grid-item='true']");
+
+                if (!imgTag || imgTag.length == 0) {
+                    img = null;
+                } else {
+                    imgTag = imgTag.find(".fadeContainer img").eq(0)
+                    
+                    if (imgTag && imgTag.length) {
+                        img = imgTag[0].src;
+                    }
+                }
+            })
+        })
+    }
+
+    initContextMenu();
+
+    return {
+        img: getImgUrl,
+        init: initContextMenu,
+    }
+}())
+
 
 chrome.runtime.onMessage.addListener(
-    function(request) {
+    function(request, sender, sendResponse) {
         if (request.message === "sort_by_repins") {
             console.log("Sort by repins");
             loadRepins(request.pages);
         } else if (request.message == "sort_by_likes") {
             // console.log("Sort by likes");
             // loadLikes(request.pages);
+        }
+
+        if (request.main_action == "img_url") {
+            sendResponse({img: downloadImg.img()});
         }
     }
 );

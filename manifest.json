@@ -40,6 +40,7 @@
 	"permissions": [
 		"tabs",
 		"storage",
+    "contextMenus",
 		"https://ajax.googleapis.com/",
 		"*://*.google.com/",
 		"*://*.pinterest.com/*",
